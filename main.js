@@ -2,6 +2,14 @@ const container = document.getElementById("container");
 const sizeButton = document.getElementById("size-button");
 let canvasSize = 10;
 
+const randomiseSquareColour = () => {
+  // RGB is between 0 and 255, so this function includes 0 and excludes 256
+  const getRandomRGBValue = () => Math.floor(Math.random() * 256);
+  const redValue = getRandomRGBValue();
+  const greenValue = getRandomRGBValue();
+  const blueValue = getRandomRGBValue();
+  return `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+};
 const createCanvas = () => {
   container.innerHTML = "";
   const squareWidth = 100 / canvasSize;
@@ -11,7 +19,7 @@ const createCanvas = () => {
     square.style.width = `${squareWidth}%`;
     container.append(square);
     square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = "red";
+      square.style.backgroundColor = randomiseSquareColour();
     });
   }
 };
