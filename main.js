@@ -1,6 +1,8 @@
 const container = document.getElementById("container");
 const sizeButton = document.getElementById("size-button");
+const modeSelector = document.getElementById("mode");
 let canvasSize = 10;
+let mode = "normal";
 
 const randomiseSquareColour = () => {
   // RGB is between 0 and 255, so this function includes 0 and excludes 256
@@ -19,7 +21,22 @@ const createCanvas = () => {
     square.style.width = `${squareWidth}%`;
     container.append(square);
     square.addEventListener("mouseover", () => {
-      square.style.backgroundColor = randomiseSquareColour();
+      if (mode === "normal") {
+        square.style.backgroundColor = "yellow";
+      }
+      if (mode === "random") {
+        square.style.backgroundColor = randomiseSquareColour();
+      }
+      if (mode === "shade") {
+        square.style.backgroundColor = "black";
+        const currentOpacity = parseFloat(square.style.opacity);
+        console.log(currentOpacity);
+        if (!currentOpacity) {
+          square.style.opacity = "0.1";
+        } else {
+          square.style.opacity = currentOpacity + 0.1;
+        }
+      }
     });
   }
 };
@@ -37,4 +54,5 @@ const changeCanvasSize = () => {
 };
 
 sizeButton.addEventListener("click", changeCanvasSize);
+modeSelector.addEventListener("change", () => (mode = modeSelector.value));
 createCanvas();
