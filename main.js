@@ -1,10 +1,32 @@
 const container = document.getElementById("container");
+const sizeButton = document.getElementById("size-button");
+let canvasSize = 10;
 
-for (let i = 0; i < 16; i += 1) {
-  const square = document.createElement("div");
-  square.classList.add("square");
-  container.append(square);
-  square.addEventListener("mouseover", () => {
-    square.style.backgroundColor = "red";
-  });
-}
+const createCanvas = () => {
+  container.innerHTML = "";
+  const squareWidth = 100 / canvasSize;
+  for (let i = 0; i < canvasSize * canvasSize; i += 1) {
+    const square = document.createElement("div");
+    square.classList.add("square");
+    square.style.width = `${squareWidth}%`;
+    container.append(square);
+    square.addEventListener("mouseover", () => {
+      square.style.backgroundColor = "red";
+    });
+  }
+};
+
+const changeCanvasSize = () => {
+  const desiredSize = parseInt(
+    prompt("How big do you want your canvas? (1-100)")
+  );
+  if (!desiredSize || typeof desiredSize !== "number" || desiredSize > 100) {
+    return alert("Please enter a number between 1 and 100");
+  } else {
+    canvasSize = desiredSize;
+    createCanvas();
+  }
+};
+
+sizeButton.addEventListener("click", changeCanvasSize);
+createCanvas();
